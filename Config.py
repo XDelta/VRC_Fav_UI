@@ -1,6 +1,6 @@
 from os import mkdir
 from os.path import dirname, exists, isdir, join
-import json
+import toml
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
@@ -10,18 +10,36 @@ class Config(object):
 	def __init__(self):
 		self.app_dir = dirname(__file__)
 
-		self.avatar_dir = join(self.app_dir, 'avatars')
-		if not isdir(self.avatar_dir):
-			mkdir(self.avatar_dir)
-
 		self.app_icon = join(self.app_dir,'favicon.ico')
 
-	def setConfigFile(self, configFile):
-		jsonData = json.load(open(join(self.app_dir, configFile)))
-		self.getKey = jsonData
-
 	def setFavoritesFile(self, favoriteFile):
-		jsonData = json.load(open(join(self.app_dir, favoriteFile)))
-		self.getFav = jsonData
+		tomlData = toml.load(open(join(self.app_dir, 'config/', favoriteFile)))
+		self.getFavorites = tomlData
+
+	def setConfigFile(self, configFile):
+		tomlData = toml.load(open(join(self.app_dir, 'config/', configFile)))
+		print(tomlData)
+		self.getUsername = tomlData.get('credentials').get('username')
+		self.getPassword = tomlData.get('credentials').get('password')
+		self.get2FARequired = tomlData.get('credentials').get('2fa')
+		if(self.get2FARequired):
+			vrcl.log("2FA not supported yet")
+			vrcf.end()
+		self.getAvatarFolder = tomlData.get('management').get('avatarFolder')
+		self.getReleaseStatusCheck = tomlData.get('management').get('releaseStatusCheck')
+		self.getDebugLogEnabled = tomlData.get('debug').get('enableDebugLog')
+		self.getSpec = tomlData.get('debug').get('configSpec')
+		self.getRaw = tomlData
+		self.updateAvatarDir()
+
+	def updateAvatarDir(self):
+		if(self.getAvatarFolder.isalnum()):
+			self.avatar_dir = join(self.app_dir, self.getAvatarFolder)
+		else:
+			vrcl.log("Avatar folder name invalid, falling back to 'avatars'")
+			self.avatar_dir = join(self.app_dir, 'avatars')
+
+		if not isdir(self.avatar_dir):
+			mkdir(self.avatar_dir)
 
 config = Config()

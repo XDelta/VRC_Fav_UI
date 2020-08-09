@@ -214,7 +214,7 @@ class AppWindow(QWidget):
 			self.statusLabel.setText("Ready")
 			self.btnState("enable")
 
-if(config.getKey["enableDebugLog"]):
+if(config.getDebugLogEnabled):
 	sys.stdout = open(join(config.app_dir, 'debug.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
 	#sys.stderr = open(join(config.app_dir,'debug.err.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
 	#not catching sys.stderr using debug.bat to catch just err

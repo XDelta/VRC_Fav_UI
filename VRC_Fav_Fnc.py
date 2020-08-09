@@ -17,7 +17,7 @@ def end():
 
 try:
 	# Here instead of in config.py so errors are logged and client can attempt logout
-	config.setConfigFile('config.json')
+	config.setConfigFile('config.toml')
 	config.setFavoritesFile('favorites.json')
 except Exception as e:
 	vrcl.log("Error opening config.json or favorites.json")
@@ -27,7 +27,7 @@ except Exception as e:
 
 def login():
 	try:
-		client.login(config.getKey["username"], config.getKey["password"])
+		client.login(config.getUsername, config.getPassword)
 		b = client.fetch_me()
 		vrcl.log("Logged in as: "+b.displayName)
 	except Exception:
@@ -65,7 +65,7 @@ def setFavorite(id):
 		vrcl.log("Failed to find "+id+", avatar may have been deleted")
 		return
 
-	if(a.releaseStatus == "private" and config.getKey["releaseStatusCheck"]):
+	if(a.releaseStatus == "private" and config.getReleaseStatusCheck):
 		vrcl.log("Failed to add "+id+", avatar was made private and would be unavailable in game")
 		vrcl.log("You may change releaseStatusCheck in config.json to skip this check")
 		return
@@ -104,8 +104,8 @@ def revertFavorites():
 
 	vrcl.log("Restoring favorites from file")
 	for x in range(1, 17):
-		if (config.getFav[str(x)] != ""):
-			setFavorite(config.getFav[str(x)])
+		if (config.getFavorites.get([str(x)] != "")):
+			setFavorite(stringToID(config.getFavorites.get([str(x)])))
 		else:
 			vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
 
