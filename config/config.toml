@@ -1,0 +1,12 @@
+[credentials]
+username = "ChangeMe"
+password = "ChangeMe"
+2fa = false #not implemented yet
+
+[management]
+avatarFolder = "avatars" #The folder to save your avatars to
+releaseStatusCheck = true # Skip adding private avatars as they would be unavailable anyway
+
+[debug]
+enableDebugLog = false
+configSpec = 1 # version of this config
