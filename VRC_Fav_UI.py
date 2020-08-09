@@ -9,6 +9,7 @@ from PyQt5.QtGui import QIcon
 
 from Config import applongname, config
 import VRC_Fav_Fnc as vrcf
+from Logging import vrcl
 
 myappid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
@@ -131,7 +132,7 @@ class AppWindow(QWidget):
 			file_path = event.mimeData().urls()[0].toLocalFile()
 			sID = vrcf.stringToID(file_path)
 			if(sID is None):
-				vrcf.log("No avtr id in file_path")
+				vrcl.log("No avtr id in file_path")
 				self.idEntry.setText("")
 				self.setquerytime(2)
 			else:
@@ -147,7 +148,7 @@ class AppWindow(QWidget):
 	def btnFavAvatarID(self):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
-			vrcf.log("No avtr id in string")
+			vrcl.log("No avtr id in string")
 			self.idEntry.setText("") #clear id
 			self.setquerytime(2)
 		else:
@@ -175,7 +176,7 @@ class AppWindow(QWidget):
 	def btnCollectAvtrById(self):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
-			vrcf.log("No avtr id in string to collect")
+			vrcl.log("No avtr id in string to collect")
 			self.idEntry.setText("") #clear id
 			self.setquerytime(2)
 		else:
