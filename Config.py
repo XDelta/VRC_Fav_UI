@@ -13,11 +13,11 @@ class Config(object):
 		self.app_icon = join(self.app_dir,'favicon.ico')
 
 	def setFavoritesFile(self, favoriteFile):
-		tomlData = toml.load(open(join(self.app_dir, 'config/', favoriteFile)))
+		tomlData = toml.load(open(join(self.app_dir, 'config', favoriteFile)))
 		self.getFavorites = tomlData
 
 	def setConfigFile(self, configFile):
-		tomlData = toml.load(open(join(self.app_dir, 'config/', configFile)))
+		tomlData = toml.load(open(join(self.app_dir, 'config', configFile)))
 		print(tomlData)
 		self.getUsername = tomlData.get('credentials').get('username')
 		self.getPassword = tomlData.get('credentials').get('password')
