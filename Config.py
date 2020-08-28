@@ -1,6 +1,8 @@
 from os import mkdir
-from os.path import dirname, exists, isdir, join
+from os.path import dirname, isdir, join
 import toml
+
+from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'

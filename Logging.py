@@ -1,4 +1,4 @@
-from os.path import dirname, exists, isdir, join
+from os.path import dirname, join
 from datetime import datetime
 
 log_file = open(join(dirname(__file__), 'VRChat_Fav.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
