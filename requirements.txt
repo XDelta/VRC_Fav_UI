@@ -1,4 +1,4 @@
 requests>=2.24.0
-vrcpy==0.6.7
-PyQt5==5.15.0
+vrcpy==0.7.6
+PyQt5>=5.15.0
 toml>=0.10.1
