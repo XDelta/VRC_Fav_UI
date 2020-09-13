@@ -33,6 +33,7 @@ class Config(object):
 		self.failCooldown = self.setValDefault(tomlData.get('management').get('failCooldown'), 2)
 		self.normalCooldown = self.setValDefault(tomlData.get('management').get('normalCooldown'), 60)
 		self.longCooldown = self.setValDefault(tomlData.get('management').get('longCooldown'), 120)
+		self.getExtraOptions = self.setValDefault(tomlData.get('debug').get('extraOptions'), False)
 		self.getSpec = tomlData.get('debug').get('configSpec')
 		self.getRaw = tomlData
 		self.updateAvatarDir()

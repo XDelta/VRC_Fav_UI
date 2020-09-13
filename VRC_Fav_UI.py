@@ -93,24 +93,21 @@ class AppWindow(QWidget):
 		self.collectAvtrIdBtn.clicked.connect(self.btnCollectAvtrById)
 		layout.addWidget(self.collectAvtrIdBtn, 6, 0, 1, 2)
 
+		if config.getExtraOptions: # alternatively may use .hide() instead of not making button
+			self.removeAvtrIdBtn = QPushButton('Remove Fav by Id', self)
+			self.removeAvtrIdBtn.clicked.connect(self.btnRemoveAvtrById)
+			layout.addWidget(self.removeAvtrIdBtn, 7, 0, 1, 2)
+
 		self.clearFavBtn = QPushButton('[Clear All Favorites]', self)
 		self.clearFavBtn.clicked.connect(self.btnClearFav)
-		layout.addWidget(self.clearFavBtn, 7, 0, 1, 2)
+		layout.addWidget(self.clearFavBtn, 8, 0, 1, 2)
 
-		self.revertFavBtn = QPushButton('[Revert Favorites.json]', self)
+		self.revertFavBtn = QPushButton('[Revert Favorites]', self)
 		self.revertFavBtn.clicked.connect(self.btnRevertFav)
-		layout.addWidget(self.revertFavBtn, 8, 0, 1, 2)
+		layout.addWidget(self.revertFavBtn, 9, 0, 1, 2)
 
 		self.statusLabel = QLabel('Ready', self)
-		layout.addWidget(self.statusLabel, 9, 0, 1, 2)
-
-		# OnTop = QCheckBox("On Top")
-		# OnTop.toggled.connect(toggleTop())
-		# layout.addWidget(OnTop,7,0)
-
-		# if (OnTop.isChecked()):
-		# 	print("checked")
-			# flags.append(Qt.WindowStaysOnTopHint)
+		layout.addWidget(self.statusLabel, 10, 0, 1, 2)
 
 		self.setLayout(layout)
 
@@ -196,6 +193,8 @@ class AppWindow(QWidget):
 			self.collectAvtrBtn.setEnabled(False)
 			self.collectAvtrIdBtn.setEnabled(False)
 			# self.allowDrop = False
+			if config.getExtraOptions:
+				self.removeAvtrIdBtn.setEnabled(False)
 		else:
 			self.addIdFavBtn.setDisabled(False)
 			self.revertFavBtn.setDisabled(False)
