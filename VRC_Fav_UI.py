@@ -173,10 +173,23 @@ class AppWindow(QWidget):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
 			vrcl.log("No avtr id in string to collect")
+			vrcl.log("ID field was empty or doesn't have a valid ID")
 			self.idEntry.setText("") #clear id
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.collectAvatarById(sID)
+			self.idEntry.setText("") #clear id
+			self.setCooldown(config.normalCooldown)
+		self.cooldown()
+
+	def btnRemoveAvtrById(self):
+		sID = vrcf.stringToID(self.idEntry.text())
+		if(sID is None):
+			vrcl.log("No avtr id in string to remove")
+			self.idEntry.setText("") #clear id
+			self.setCooldown(config.failCooldown)
+		else:
+			vrcf.removeFavoriteID(sID)
 			self.idEntry.setText("") #clear id
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
@@ -188,20 +201,22 @@ class AppWindow(QWidget):
 	def btnState(self, state):
 		if state == "disable":
 			self.addIdFavBtn.setEnabled(False)
-			self.revertFavBtn.setEnabled(False)
-			self.clearFavBtn.setEnabled(False)
 			self.collectAvtrBtn.setEnabled(False)
 			self.collectAvtrIdBtn.setEnabled(False)
-			# self.allowDrop = False
 			if config.getExtraOptions:
 				self.removeAvtrIdBtn.setEnabled(False)
+			self.revertFavBtn.setEnabled(False)
+			self.clearFavBtn.setEnabled(False)
+			self.allowDrop = False
 		else:
-			self.addIdFavBtn.setDisabled(False)
-			self.revertFavBtn.setDisabled(False)
-			self.clearFavBtn.setDisabled(False)
-			self.collectAvtrBtn.setDisabled(False)
-			self.collectAvtrIdBtn.setDisabled(False)
-			# self.allowDrop = True
+			self.addIdFavBtn.setEnabled(True)
+			self.collectAvtrBtn.setEnabled(True)
+			self.collectAvtrIdBtn.setEnabled(True)
+			if config.getExtraOptions:
+				self.removeAvtrIdBtn.setEnabled(True)
+			self.revertFavBtn.setEnabled(True)
+			self.clearFavBtn.setEnabled(True)
+			self.allowDrop = True
 
 	def cooldown(self):
 		if(time() < self.querytime):

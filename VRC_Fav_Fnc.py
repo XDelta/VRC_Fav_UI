@@ -8,7 +8,6 @@ from Config import config
 from Logging import vrcl
 
 client = vrcpy.Client()
-client.log_to_console = False
 
 def end():
 	client.logout()
@@ -18,9 +17,8 @@ def end():
 try:
 	# Here instead of in config.py so errors are logged and client can attempt logout
 	config.setConfigFile('config.toml')
-	config.setFavoritesFile('favorites.json')
 except Exception as e:
-	vrcl.log("Error opening config.json or favorites.json")
+	vrcl.log("Error opening config")
 	vrcl.log(str(e))
 	vrcl.closeLog()
 	raise e
@@ -63,11 +61,12 @@ def setFavorite(id):
 	except Exception as e:
 		vrcl.log(str(e))
 		vrcl.log("Failed to find "+id+", avatar may have been deleted")
+		vrcl.log("No response received, retry later") #if vrc auth timed out, this will return no response
 		return
 
 	if(a.releaseStatus == "private" and config.getReleaseStatusCheck):
 		vrcl.log("Failed to add "+id+", avatar was made private and would be unavailable in game")
-		vrcl.log("You may change releaseStatusCheck in config.json to skip this check")
+		vrcl.log("You may change releaseStatusCheck in config.toml to skip this check")
 		return
 
 	try:
@@ -80,7 +79,13 @@ def removeFavorite(user, id):
 	vrcl.log("removeFavorite: " + id)
 	user.remove_favorite(id)
 
-def removeAllFavorites():
+def removeFavoriteID(id):
+	if id is None:
+		return
+	vrcl.log("removeFavorite: " + id)
+	client.fetch_me().remove_favorite(id)
+
+def clearFavorites():
 	list = getFavoriteList()
 	d = client.fetch_me()
 	for favAv in list:
