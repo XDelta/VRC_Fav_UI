@@ -6,36 +6,56 @@ from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
-
+configSpec = 2
 class Config(object):
 
 	def __init__(self):
 		self.app_dir = dirname(__file__)
+		self.app_icon = join(self.app_dir, 'favicon.ico')
 
-		self.app_icon = join(self.app_dir,'favicon.ico')
+	# def setFavoritesFile(self, favoriteFile):
+	# 	tomlData = toml.load(open(join(self.app_dir, 'config', 'favorites.toml')))
+	# 	self.getFavorites = tomlData
 
-	def setFavoritesFile(self, favoriteFile):
-		tomlData = toml.load(open(join(self.app_dir, 'config', favoriteFile)))
-		self.getFavorites = tomlData
+	def getFavorites(self): # gets favorites from file when needed, allows updating your favorites without restarting
+		try:
+			tomlData = toml.load(open(join(self.app_dir, 'config', 'favorites.toml')))
+			return tomlData
+		except Exception as e:
+			vrcl.log(e)
+			vrcl.log("Failed to load favorites.toml")
+			return None
+
+	def setValDefault(self, val, default): #set a default in case the value is missing in the config
+		if(val == None or val == ""):
+			return default
+		return val
 
 	def setConfigFile(self, configFile):
 		tomlData = toml.load(open(join(self.app_dir, 'config', configFile)))
-		print(tomlData)
-		self.getUsername = tomlData.get('credentials').get('username')
-		self.getPassword = tomlData.get('credentials').get('password')
-		self.get2FARequired = tomlData.get('credentials').get('2fa')
+
+		# print(tomlData)
+		self.getUsername = self.setValDefault(tomlData.get('credentials').get('username'), "ChangeMe")
+		self.getPassword = self.setValDefault(tomlData.get('credentials').get('password'), "ChangeMe")
+		self.get2FARequired = self.setValDefault(tomlData.get('credentials').get('2fa'), False)
 		if(self.get2FARequired):
 			vrcl.log("2FA not supported yet")
-			vrcf.end()
-		self.getAvatarFolder = tomlData.get('management').get('avatarFolder')
-		self.getReleaseStatusCheck = tomlData.get('management').get('releaseStatusCheck')
-		self.getDebugLogEnabled = tomlData.get('debug').get('enableDebugLog')
+
+		self.getAvatarFolder = self.setValDefault(tomlData.get('management').get('avatarFolder'), "avatars")
+		self.getReleaseStatusCheck = self.setValDefault(tomlData.get('management').get('releaseStatusCheck'), True)
 		self.failCooldown = self.setValDefault(tomlData.get('management').get('failCooldown'), 2)
 		self.normalCooldown = self.setValDefault(tomlData.get('management').get('normalCooldown'), 60)
 		self.longCooldown = self.setValDefault(tomlData.get('management').get('longCooldown'), 120)
+
+		self.getDebugLogEnabled = self.setValDefault(tomlData.get('debug').get('debugLog'), False)
 		self.getExtraOptions = self.setValDefault(tomlData.get('debug').get('extraOptions'), False)
 		self.getSpec = tomlData.get('debug').get('configSpec')
+		if(self.getSpec != configSpec):
+			vrcl.log("ConfigSpec in "+configFile+" doesn't match this version, your config may be out of date")
 		self.getRaw = tomlData
+
+		if(self.getDebugLogEnabled):
+			print(tomlData)
 		self.updateAvatarDir()
 
 	def updateAvatarDir(self):
