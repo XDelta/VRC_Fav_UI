@@ -97,10 +97,8 @@ def getFavoriteList():
 	return a
 
 def revertFavorites():
-	vrcl.log("Removing Favorites pass 1")
-	removeAllFavorites()
-	vrcl.log("Removing Favorites pass 2")
-	removeAllFavorites()
+	clearFavorites()
+	clearFavorites()
 
 	vrcl.log("Restoring favorites from file")
 	for x in range(1, 17):
