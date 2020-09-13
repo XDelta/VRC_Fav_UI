@@ -4,9 +4,12 @@ password = "ChangeMe"
 2fa = false #not implemented yet
 
 [management]
-avatarFolder = "avatars" #The folder to save your avatars to
+avatarFolder = "avatars" # The folder to save your avatars to
 releaseStatusCheck = true # Skip adding private avatars as they would be unavailable anyway
+failCooldown = 2 # Entered ID was invalid
+normalCooldown = 60 # 60s to respect vrchat api guidelines, change at own risk of api limiting
+longCooldown = 120 # 120s for actions that make many api calls
 
 [debug]
-enableDebugLog = false
-configSpec = 1 # version of this config
+debugLog = false
+configSpec = 2 # version of this config

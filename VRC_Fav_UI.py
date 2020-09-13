@@ -134,11 +134,11 @@ class AppWindow(QWidget):
 			if(sID is None):
 				vrcl.log("No avtr id in file_path")
 				self.idEntry.setText("")
-				self.setquerytime(2)
+				self.setCooldown(config.failCooldown)
 			else:
 				vrcf.setFavorite(sID)
 				self.idEntry.setText("")
-				self.setquerytime(60)
+				self.setCooldown(config.normalCooldown)
 			self.cooldown()
 
 			event.accept()
@@ -150,27 +150,26 @@ class AppWindow(QWidget):
 		if(sID is None):
 			vrcl.log("No avtr id in string")
 			self.idEntry.setText("") #clear id
-			self.setquerytime(2)
+			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.setFavorite(sID)
 			self.idEntry.setText("") #clear id
-			self.setquerytime(60)
+			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def btnRevertFav(self):
 		vrcf.revertFavorites()
-		self.setquerytime(120)
+		self.setCooldown(config.longCooldown)
 		self.cooldown()
 
 	def btnClearFav(self):
-		vrcf.removeAllFavorites()
-		vrcf.removeAllFavorites() #because vrchat returns 10 objects
-		self.setquerytime(120)
+		vrcf.clearFavorites()
+		self.setCooldown(config.longCooldown)
 		self.cooldown()
 
 	def btnCollectAvtr(self):
 		vrcf.collectAvatar()
-		self.setquerytime(60)
+		self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def btnCollectAvtrById(self):
@@ -178,14 +177,14 @@ class AppWindow(QWidget):
 		if(sID is None):
 			vrcl.log("No avtr id in string to collect")
 			self.idEntry.setText("") #clear id
-			self.setquerytime(2)
+			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.collectAvatarById(sID)
 			self.idEntry.setText("") #clear id
-			self.setquerytime(60)
+			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
-	def setquerytime(self, waitTime):
+	def setCooldown(self, waitTime):
 		self.querytime = int(time()) + waitTime
 
 

@@ -30,6 +30,9 @@ class Config(object):
 		self.getAvatarFolder = tomlData.get('management').get('avatarFolder')
 		self.getReleaseStatusCheck = tomlData.get('management').get('releaseStatusCheck')
 		self.getDebugLogEnabled = tomlData.get('debug').get('enableDebugLog')
+		self.failCooldown = self.setValDefault(tomlData.get('management').get('failCooldown'), 2)
+		self.normalCooldown = self.setValDefault(tomlData.get('management').get('normalCooldown'), 60)
+		self.longCooldown = self.setValDefault(tomlData.get('management').get('longCooldown'), 120)
 		self.getSpec = tomlData.get('debug').get('configSpec')
 		self.getRaw = tomlData
 		self.updateAvatarDir()
