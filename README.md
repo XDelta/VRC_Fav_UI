@@ -11,8 +11,9 @@ Run install.bat or
 pip install -r requirements.txt
 ```
 then edit config.toml with your vrchat login information
+
 ## Usage
-Run VRC_Fav_UI.py<br>
+Run VRC_Fav_UI.py
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
