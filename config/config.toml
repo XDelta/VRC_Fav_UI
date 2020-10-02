@@ -13,4 +13,5 @@ longCooldown = 120 # 120s for actions that make many api calls
 [debug]
 debugLog = false
 extraOptions = false
-configSpec = 2 # version of this config
+writedb = false
+configSpec = 3 # version of this config

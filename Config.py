@@ -1,3 +1,4 @@
+# pylint: disable=E0611,E1101,W0201,W0622
 from os import mkdir
 from os.path import dirname, isdir, join
 import toml
@@ -6,7 +7,7 @@ from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
-configSpec = 2
+configSpec = 3
 class Config(object):
 
 	def __init__(self):
@@ -49,6 +50,7 @@ class Config(object):
 
 		self.getDebugLogEnabled = self.setValDefault(tomlData.get('debug').get('debugLog'), False)
 		self.getExtraOptions = self.setValDefault(tomlData.get('debug').get('extraOptions'), False)
+		self.writedb = self.setValDefault(tomlData.get('debug').get('writedb'), False)
 		self.getSpec = tomlData.get('debug').get('configSpec')
 		if(self.getSpec != configSpec):
 			vrcl.log("ConfigSpec in "+configFile+" doesn't match this version, your config may be out of date")
