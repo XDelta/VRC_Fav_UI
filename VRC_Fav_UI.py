@@ -106,8 +106,13 @@ class AppWindow(QWidget):
 		self.revertFavBtn.clicked.connect(self.btnRevertFav)
 		layout.addWidget(self.revertFavBtn, 9, 0, 1, 2)
 
+		if config.writedb:
+			self.genDBBtn = QPushButton('[Generate DB]', self) #Use once to make db
+			self.genDBBtn.clicked.connect(self.btnGenDB)
+			layout.addWidget(self.genDBBtn, 10, 0, 1, 2)
+
 		self.statusLabel = QLabel('Ready', self)
-		layout.addWidget(self.statusLabel, 10, 0, 1, 2)
+		layout.addWidget(self.statusLabel, 11, 0, 1, 2)
 
 		self.setLayout(layout)
 
@@ -152,6 +157,11 @@ class AppWindow(QWidget):
 			vrcf.setFavorite(sID)
 			self.idEntry.setText("") #clear id
 			self.setCooldown(config.normalCooldown)
+		self.cooldown()
+
+	def btnGenDB(self):
+		vrcf.generate()
+		self.setCooldown(3)
 		self.cooldown()
 
 	def btnRevertFav(self):
