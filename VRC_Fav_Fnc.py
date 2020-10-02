@@ -95,10 +95,6 @@ def setFavorite(id):
 		vrcl.log("Failed to add to favorites, likely at max")
 		vrcl.log(str(e))
 
-def removeFavorite(user, id):
-	vrcl.log("removeFavorite: " + id)
-	user.remove_favorite(id)
-
 def removeFavoriteID(id):
 	if id is None:
 		return
