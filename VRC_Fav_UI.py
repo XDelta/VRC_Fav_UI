@@ -1,4 +1,4 @@
-# pylint: disable=W0622,E0611
+# pylint: disable=E0611,E1101,W0201,W0622
 import sys, ctypes
 from os.path import join
 from time import time
