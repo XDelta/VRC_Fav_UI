@@ -134,12 +134,12 @@ class AppWindow(QWidget):
 			file_path = event.mimeData().urls()[0].toLocalFile()
 			sID = vrcf.stringToID(file_path)
 			if(sID is None):
-				vrcl.log("No avtr id in file_path")
-				self.idEntry.setText("")
+				vrcl.log("No avtr_id in file_path")
+				self.clearId()
 				self.setCooldown(config.failCooldown)
 			else:
 				vrcf.setFavorite(sID)
-				self.idEntry.setText("")
+				self.clearId()
 				self.setCooldown(config.normalCooldown)
 			self.cooldown()
 
@@ -150,12 +150,12 @@ class AppWindow(QWidget):
 	def btnFavAvatarID(self):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
-			vrcl.log("No avtr id in string")
-			self.idEntry.setText("") #clear id
+			vrcl.log("No avtr_id in string")
+			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.setFavorite(sID)
-			self.idEntry.setText("") #clear id
+			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
@@ -182,31 +182,33 @@ class AppWindow(QWidget):
 	def btnCollectAvtrById(self):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
-			vrcl.log("No avtr id in string to collect")
+			vrcl.log("No avtr_id in string to collect")
 			vrcl.log("ID field was empty or doesn't have a valid ID")
-			self.idEntry.setText("") #clear id
+			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.collectAvatarById(sID)
-			self.idEntry.setText("") #clear id
+			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def btnRemoveAvtrById(self):
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
-			vrcl.log("No avtr id in string to remove")
-			self.idEntry.setText("") #clear id
+			vrcl.log("No avtr_id in string to remove")
+			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.removeFavoriteID(sID)
-			self.idEntry.setText("") #clear id
+			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def setCooldown(self, waitTime):
 		self.querytime = int(time()) + waitTime
 
+	def clearId(self):
+		self.idEntry.setText("") #clear id
 
 	def btnState(self, state):
 		if state == "disable":
