@@ -129,7 +129,7 @@ class AppWindow(QWidget):
 			event.ignore()
 
 	def dropEvent(self, event):
-		if(event.mimeData().hasImage):# and self.allowDrop == True
+		if(event.mimeData().hasImage and self.allowDrop == True):# and self.allowDrop == True
 			event.setDropAction(Qt.CopyAction)
 			file_path = event.mimeData().urls()[0].toLocalFile()
 			sID = vrcf.stringToID(file_path)
