@@ -11,8 +11,8 @@ from Config import applongname, config
 import VRC_Fav_Fnc as vrcf
 from Logging import vrcl
 
-myappid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+appid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
 class DropTarget(QLabel):
 	def __init__(self):
