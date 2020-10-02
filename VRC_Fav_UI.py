@@ -138,6 +138,7 @@ class AppWindow(QWidget):
 				self.clearId()
 				self.setCooldown(config.failCooldown)
 			else:
+				vrcf.checkAuth()
 				vrcf.setFavorite(sID)
 				self.clearId()
 				self.setCooldown(config.normalCooldown)
@@ -154,6 +155,7 @@ class AppWindow(QWidget):
 			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
+			vrcf.checkAuth()
 			vrcf.setFavorite(sID)
 			self.clearId()
 			self.setCooldown(config.normalCooldown)
@@ -165,21 +167,25 @@ class AppWindow(QWidget):
 		self.cooldown()
 
 	def btnRevertFav(self):
+		vrcf.checkAuth()
 		vrcf.revertFavorites()
 		self.setCooldown(config.longCooldown)
 		self.cooldown()
 
 	def btnClearFav(self):
+		vrcf.checkAuth()
 		vrcf.clearFavorites()
 		self.setCooldown(config.longCooldown)
 		self.cooldown()
 
 	def btnCollectAvtr(self):
+		vrcf.checkAuth()
 		vrcf.collectAvatar()
 		self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def btnCollectAvtrById(self):
+		vrcf.checkAuth()
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
 			vrcl.log("No avtr_id in string to collect")
@@ -193,6 +199,7 @@ class AppWindow(QWidget):
 		self.cooldown()
 
 	def btnRemoveAvtrById(self):
+		vrcf.checkAuth()
 		sID = vrcf.stringToID(self.idEntry.text())
 		if(sID is None):
 			vrcl.log("No avtr_id in string to remove")
