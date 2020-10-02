@@ -133,14 +133,13 @@ class AppWindow(QWidget):
 			event.setDropAction(Qt.CopyAction)
 			file_path = event.mimeData().urls()[0].toLocalFile()
 			sID = vrcf.stringToID(file_path)
+			self.clearId()
 			if(sID is None):
 				vrcl.log("No avtr_id in file_path")
-				self.clearId()
 				self.setCooldown(config.failCooldown)
 			else:
 				vrcf.checkAuth()
 				vrcf.setFavorite(sID)
-				self.clearId()
 				self.setCooldown(config.normalCooldown)
 			self.cooldown()
 
@@ -150,14 +149,13 @@ class AppWindow(QWidget):
 
 	def btnFavAvatarID(self):
 		sID = vrcf.stringToID(self.idEntry.text())
+		self.clearId()
 		if(sID is None):
 			vrcl.log("No avtr_id in string")
-			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.checkAuth()
 			vrcf.setFavorite(sID)
-			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
@@ -187,27 +185,25 @@ class AppWindow(QWidget):
 	def btnCollectAvtrById(self):
 		vrcf.checkAuth()
 		sID = vrcf.stringToID(self.idEntry.text())
+		self.clearId()
 		if(sID is None):
 			vrcl.log("No avtr_id in string to collect")
 			vrcl.log("ID field was empty or doesn't have a valid ID")
-			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.collectAvatarById(sID)
-			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
 	def btnRemoveAvtrById(self):
 		vrcf.checkAuth()
 		sID = vrcf.stringToID(self.idEntry.text())
+		self.clearId()
 		if(sID is None):
 			vrcl.log("No avtr_id in string to remove")
-			self.clearId()
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.removeFavoriteID(sID)
-			self.clearId()
 			self.setCooldown(config.normalCooldown)
 		self.cooldown()
 
