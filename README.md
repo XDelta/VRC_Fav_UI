@@ -13,10 +13,10 @@ pip install -r requirements.txt
 then edit config.toml with your vrchat login information
 
 ## Updating from a previous version
-I recommend you make a backup of the folder before starting and move/rename the existing folder
-Install using instructions above
-Copy avatars/config folders into new install
-(old configs will warn you if out of date)
+I recommend you make a backup of the folder before starting and move/rename the existing folder<br>
+Install using instructions above<br>
+Copy avatars/config folders into new install<br>
+(old configs will warn you if out of date)<br>
 
 Run VRC_Fav_UI.py
 
