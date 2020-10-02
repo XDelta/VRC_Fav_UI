@@ -61,8 +61,8 @@ def dropFile(data):
 
 def stringToID(input):
 	reg = re.compile("(avtr_[0-9,a-f]{8}-[0-9,a-f]{4}-[0-9,a-f]{4}-[0-9,a-f]{4}-[0-9,a-f]{12})") #tests https://regexr.com/56rb9
-	#remove extra prefixes like skip_, private_, deleted_, nsfw_, etc
-	result = reg.search(input)  #search full path string
+	#removes extra prefixes like skip_, private_, deleted_, nsfw_, etc
+	result = reg.search(input) #search full path string
 	vrcl.log("re:" + str(result))
 	try:
 		return result.group(1)
@@ -72,7 +72,7 @@ def stringToID(input):
 
 def setFavorite(id):
 	if(id is None):
-		vrcl.log("No avtr id in string to fav")
+		vrcl.log("No avtr id in string to favorite")
 		return
 
 	try:
@@ -81,7 +81,7 @@ def setFavorite(id):
 	except Exception as e:
 		vrcl.log(str(e))
 		vrcl.log("Failed to find "+id+", avatar may have been deleted")
-		vrcl.log("No response received, retry later") #if vrc auth timed out, this will return no response
+		vrcl.log("No response received, retry later") #if vrc auth timed out, this will return no response. vrc might also just not have found it in time
 		return
 
 	if(a.releaseStatus == "private" and config.getReleaseStatusCheck):
@@ -107,9 +107,10 @@ def removeFavoriteID(id):
 
 def clearFavorites():
 	list = getFavoriteList()
-	d = client.fetch_me()
+	user = client.fetch_me()
 	for favAv in list:
-		removeFavorite(d, favAv.favoriteId)
+		vrcl.log("removeFavorite: " + id)
+		user.remove_favorite(favAv.favoriteId)
 
 def getFavoriteList():
 	#seem to not get all?, got 10 of 16
