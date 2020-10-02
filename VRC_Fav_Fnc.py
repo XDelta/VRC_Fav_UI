@@ -11,18 +11,19 @@ from Logging import vrcl
 client = vrcpy.Client()
 
 def end():
-	client.logout()
+	try: #client may not be logged in
+		client.logout()
+	except:
+		pass
 	vrcl.closeLog()
 	sys.exit()
 
 try:
-	# Here instead of in config.py so errors are logged and client can attempt logout
 	config.setConfigFile('config.toml')
 except Exception as e:
 	vrcl.log("Error opening config")
 	vrcl.log(str(e))
-	vrcl.closeLog()
-	raise e
+	end()
 
 try:
 	conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
@@ -37,10 +38,10 @@ def login():
 		client.login(config.getUsername, config.getPassword)
 		b = client.fetch_me()
 		vrcl.log("Logged in as: "+b.displayName)
-	except Exception:
+	except Exception as e:
+		vrcl.log(type(e)+":"+e)
 		vrcl.log("Failed to Login")
-		vrcl.closeLog()
-		sys.exit()
+		end()
 
 def getUser():
 	return client.fetch_me().displayName
