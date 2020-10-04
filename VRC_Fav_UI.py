@@ -1,6 +1,7 @@
 # pylint: disable=E0611,E1101,W0201,W0622
 import sys, ctypes
 from os.path import join
+from os import environ
 from time import time
 
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout, QLineEdit#, QCheckBox
@@ -247,6 +248,13 @@ if(config.getDebugLogEnabled):
 	#sys.stderr = open(join(config.app_dir,'debug.err.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
 	#not catching sys.stderr using debug.bat to catch just err
 
+def suppress_qt_warnings():
+	environ["QT_DEVICE_PIXEL_RATIO"] = "0"
+	environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+	environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+	environ["QT_SCALE_FACTOR"] = "1"
+
+suppress_qt_warnings()
 app = QApplication(sys.argv)
 appWindow = AppWindow()
 appWindow.show()
