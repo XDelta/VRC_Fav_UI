@@ -1,4 +1,5 @@
 requests>=2.24.0
-vrcpy==0.7.6
+vrcpy==0.7.8
 PyQt5>=5.15.1
 toml>=0.10.1
+system-hotkey==1.0.3
