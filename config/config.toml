@@ -1,17 +1,19 @@
 [credentials]
 username = "ChangeMe"
 password = "ChangeMe"
-2fa = false #not implemented yet
+2fa = false # not implemented yet
 
 [management]
 avatarFolder = "avatars" # The folder to save your avatars to
+writeAvatarDB = true # Write avatars to SQLite database
 releaseStatusCheck = true # Skip adding private avatars as they would be unavailable anyway
 failCooldown = 2 # Entered ID was invalid
 normalCooldown = 60 # 60s to respect vrchat api guidelines, change at own risk of api limiting
 longCooldown = 120 # 120s for actions that make many api calls
+useGlobalKeybind = true # Use a global keybind, allows collecting your worn avatar without leaving game window
+globalKeybind = ["control","k"] # Default keybind control + k, accepts up to 3 modifier keys
 
 [debug]
-debugLog = false
-extraOptions = false
-writedb = false
-configSpec = 3 # version of this config
+debugLog = false # Save output log to txt file instead of in the console window
+extraOptions = false # Allows removing favorites by avtr_id
+configSpec = 4 # Version of this config
