@@ -7,7 +7,8 @@ from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
-configSpec = 3
+configSpec = 4
+
 class Config(object):
 
 	def __init__(self):
@@ -47,6 +48,8 @@ class Config(object):
 		self.failCooldown = self.setValDefault(tomlData.get('management').get('failCooldown'), 2)
 		self.normalCooldown = self.setValDefault(tomlData.get('management').get('normalCooldown'), 60)
 		self.longCooldown = self.setValDefault(tomlData.get('management').get('longCooldown'), 120)
+		self.useGlobalKeybind = self.setValDefault(tomlData.get('management').get('useGlobalKeybind'), False)
+		self.getGlobalKeyBind = self.setValDefault(tomlData.get('management').get('globalKeybind'), ["control", "k"])
 
 		self.getDebugLogEnabled = self.setValDefault(tomlData.get('debug').get('debugLog'), False)
 		self.getExtraOptions = self.setValDefault(tomlData.get('debug').get('extraOptions'), False)

@@ -7,18 +7,19 @@ from time import time
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout, QLineEdit#, QCheckBox
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QIcon
+from system_hotkey import SystemHotkey
 
 from Config import applongname, config
 import VRC_Fav_Fnc as vrcf
 from Logging import vrcl
 
+hk = SystemHotkey()
 appid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 
 class DropTarget(QLabel):
 	def __init__(self):
 		super().__init__()
-
 		self.setAlignment(Qt.AlignCenter)
 		self.setText('\n\n Drop Avatar Here \n\n')
 		self.setStyleSheet('''
@@ -243,6 +244,8 @@ class AppWindow(QWidget):
 			self.statusLabel.setText("Ready")
 			self.btnState("enable")
 
+
+
 if(config.getDebugLogEnabled):
 	sys.stdout = open(join(config.app_dir, 'debug.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
 	#sys.stderr = open(join(config.app_dir,'debug.err.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
@@ -258,4 +261,16 @@ suppress_qt_warnings()
 app = QApplication(sys.argv)
 appWindow = AppWindow()
 appWindow.show()
+if(config.useGlobalKeybind):
+	try:
+		hk.register((config.getGlobalKeyBind), callback=lambda x: QbtnCollectAvtr())
+	except hk.InvalidKeyError:
+		vrcl.log("Invalid key combo, using default ctrl+k")
+		hk.register(('control', 'k'), callback=lambda x: appWindow.onThread(appWindow.btnCollectAvtr()))
+	except hk.SystemRegisterError:
+		vrcl.log("Key binding is already registered on the system")
+		vrcl.log("keybind will not be available")
+	except Exception as e:
+		print(str(e))
+
 sys.exit(app.exec_())
