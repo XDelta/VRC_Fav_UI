@@ -113,17 +113,13 @@ def clearFavorites():
 
 
 def getFavoriteList():
-	#seem to not get all?, got 10 of 16
 	vrcl.log("Fetching favorites")
 	a = client.fetch_me().fetch_favorites("avatar")
-
 	for x in a: #log favorites
 		vrcl.log(x.favoriteId)
-
 	return a
 
 def revertFavorites():
-	clearFavorites()
 	clearFavorites()
 
 	vrcl.log("Restoring favorites from file")
