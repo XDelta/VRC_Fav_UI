@@ -25,13 +25,6 @@ except Exception as e:
 	vrcl.log(str(e))
 	end()
 
-try:
-	conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
-	print("Opened database successfully")
-except Exception as e:
-	vrcl.log("Unable to open vrcdb.sqlite")
-	vrcl.log(str(e))
-	end()
 
 def login():
 	try:
