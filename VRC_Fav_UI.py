@@ -14,7 +14,7 @@ import VRC_Fav_Fnc as vrcf
 from Logging import vrcl
 
 hk = SystemHotkey()
-appid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
+appid = 'tk.deltawolf.vrc_fav_ui' # unique id string for windows to show taskbar icon
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
 onCooldown = False
 
