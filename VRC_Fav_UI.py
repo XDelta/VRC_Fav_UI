@@ -166,13 +166,13 @@ class AppWindow(QWidget):
 		self.cooldown()
 
 	def btnRevertFav(self):
-		vrcf.revertFavorites()
 		self.setCooldown(config.longCooldown)
+		vrcf.revertFavorites()
 		self.cooldown()
 
 	def btnClearFav(self):
-		vrcf.clearFavorites()
 		self.setCooldown(config.longCooldown)
+		vrcf.clearFavorites()
 		self.cooldown()
 
 	def btnCollectAvtr(self):
@@ -189,8 +189,8 @@ class AppWindow(QWidget):
 			vrcl.log("ID field was empty or doesn't have a valid ID")
 			self.setCooldown(config.failCooldown)
 		else:
-			vrcf.collectAvatarById(sID)
 			self.setCooldown(config.normalCooldown)
+			vrcf.collectAvatarById(sID)
 		self.cooldown()
 
 	def btnRemoveAvtrById(self):
@@ -200,8 +200,8 @@ class AppWindow(QWidget):
 			vrcl.log("No avtr_id in string to remove")
 			self.setCooldown(config.failCooldown)
 		else:
-			vrcf.removeFavoriteID(sID)
 			self.setCooldown(config.normalCooldown)
+			vrcf.removeFavoriteID(sID)
 		self.cooldown()
 
 	def setCooldown(self, waitTime):
