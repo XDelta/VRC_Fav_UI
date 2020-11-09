@@ -3,9 +3,9 @@ import sys, ctypes
 from os.path import join
 from os import environ
 from time import time
-
+import threading
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout, QLineEdit#, QCheckBox
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from system_hotkey import SystemHotkey
 
@@ -16,6 +16,7 @@ from Logging import vrcl
 hk = SystemHotkey()
 appid = 'tk.deltawolf.vrcfav_qt' # unique id string for windows to show taskbar icon
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
+onCooldown = False
 
 class DropTarget(QLabel):
 	def __init__(self):
@@ -175,9 +176,10 @@ class AppWindow(QWidget):
 		self.cooldown()
 
 	def btnCollectAvtr(self):
-		vrcf.collectAvatar()
-		self.setCooldown(config.normalCooldown)
-		self.cooldown()
+		if not onCooldown:
+			self.setCooldown(config.normalCooldown)
+			vrcf.collectAvatar()
+			self.cooldown()
 
 	def btnCollectAvtrById(self):
 		sID = vrcf.stringToID(self.idEntry.text())
@@ -230,14 +232,14 @@ class AppWindow(QWidget):
 
 	def cooldown(self):
 		if(time() < self.querytime):
+			onCooldown = True
 			self.btnState("disable")
-			QTimer.singleShot(1000, lambda: self.cooldown())
+			threading.Timer(1.0, self.cooldown).start()
 			self.statusLabel.setText("Cooldown " + str((self.querytime) - int(time())) + "s")
 		else:
+			onCooldown = False
 			self.statusLabel.setText("Ready")
 			self.btnState("enable")
-
-
 
 if(config.getDebugLogEnabled):
 	sys.stdout = open(join(config.app_dir, 'debug.log'), mode='a+', encoding='utf-8', errors='ignore', buffering=1)
@@ -254,15 +256,13 @@ suppress_qt_warnings()
 app = QApplication(sys.argv)
 appWindow = AppWindow()
 appWindow.show()
+
 if(config.useGlobalKeybind):
 	try:
-		hk.register((config.getGlobalKeyBind), callback=lambda x: QbtnCollectAvtr())
-	except hk.InvalidKeyError:
+		hk.register((config.getGlobalKeyBind), callback=lambda x: appWindow.btnCollectAvtr())
+	except SystemHotkey.InvalidKeyError:
 		vrcl.log("Invalid key combo, using default ctrl+k")
-		hk.register(('control', 'k'), callback=lambda x: appWindow.onThread(appWindow.btnCollectAvtr()))
-	except hk.SystemRegisterError:
-		vrcl.log("Key binding is already registered on the system")
-		vrcl.log("keybind will not be available")
+		hk.register(('control', 'k'), callback=lambda x: appWindow.btnCollectAvtr())
 	except Exception as e:
 		print(str(e))
 
