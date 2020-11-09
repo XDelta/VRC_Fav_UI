@@ -167,22 +167,29 @@ def collectAvatarById(idInput):
 	outputFile = join(config.avatar_dir, avtr_id+".png")
 	vrcl.log(outputFile)
 
-	if config.writedb: # write to sqlite db if configured
-		ac = conn.cursor()
-		if ac.execute("SELECT EXISTS(SELECT 1 FROM AVATARS WHERE avtr_id=?)", (idInput, )).fetchone()[0] > 0: #check if id is already in db
-			print("Found "+idInput+" in db")
-		else: #if not, add try to add it to db
-			print(idInput+" was not found in db")
-			try:
-				ac.execute("INSERT INTO AVATARS (avtr_id, avtr_name, avtr_desc, avtr_img, user_id, user_name, user_username, date_collected, release_status) VALUES (?,?,?,?,?,?,?,?,?)",
-				           (avtr_id, avtr_name, avtr_desc, avtr_img, user_id, user_name, user_username, date_collected, release_status))
-				conn.commit()
-				ac.close()
-				vrcl.log("Saved: "+avtr_id+" to db")
-			except Exception as e:
-				vrcl.log(e)
-				vrcl.log("Error in insert")
-				raise e
+	if config.writeAvatarDB: # write to sqlite db if configured
+		try:
+			conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
+			ac = conn.cursor()
+			if ac.execute("SELECT EXISTS(SELECT 1 FROM AVATARS WHERE avtr_id=?)", (idInput, )).fetchone()[0] > 0: #check if id is already in db
+				print("Found "+idInput+" in db")
+			else: #if not, add try to add it to db
+				print(idInput+" was not found in db")
+				try:
+					ac.execute("INSERT INTO AVATARS (avtr_id, avtr_name, avtr_desc, avtr_img, user_id, user_name, user_username, date_collected, release_status) VALUES (?,?,?,?,?,?,?,?,?)",
+					           (avtr_id, avtr_name, avtr_desc, avtr_img, user_id, user_name, user_username, date_collected, release_status))
+					conn.commit()
+					ac.close()
+					vrcl.log("Saved: "+avtr_id+" to db")
+				except Exception as e:
+					vrcl.log(e)
+					vrcl.log("Error in insert")
+					raise e
+			conn.commit()
+			ac.close()
+		except Exception as e:
+			vrcl.log("Unable to open vrcdb.sqlite")
+			vrcl.log(str(e))
 
 	if not exists(outputFile): #check if image already exists if not, download it
 		r = requests.get(avtr_img, allow_redirects=True, stream=True, headers={'User-Agent': ""}) #stopped by cf if useragent is missing, fine if empty, https://i.gifer.com/72nt.gif
@@ -195,23 +202,30 @@ def collectAvatarById(idInput):
 		vrcl.log("Skipping")
 
 def generate():
-	gc = conn.cursor()
-	gc.execute('''CREATE TABLE IF NOT EXISTS "AVATARS" (
-		"avtr_id"	TEXT NOT NULL CHECK(length(avtr_id) = 41) UNIQUE COLLATE NOCASE,
-		"avtr_name"	TEXT NOT NULL,
-		"avtr_desc"	TEXT,
-		"avtr_img"	TEXT,
-		"user_id"	TEXT NOT NULL CHECK(length(user_id) = 40),
-		"user_name"	TEXT NOT NULL COLLATE NOCASE,
-		"user_username"	TEXT NOT NULL COLLATE NOCASE,
-		"date_collected"	TEXT,
-		"release_status"	TEXT COLLATE NOCASE,
-		"mark"	TEXT COLLATE NOCASE,
-		"notes"	TEXT,
-		"nsfw"	INTEGER DEFAULT 0,
-		PRIMARY KEY("avtr_id")
-		);
-	''')
-	conn.commit()
-	gc.close()
-	print("Generated tables")
+	try:
+		conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
+		gc = conn.cursor()
+		gc.execute('''CREATE TABLE IF NOT EXISTS "AVATARS" (
+			"avtr_id"	TEXT NOT NULL CHECK(length(avtr_id) = 41) UNIQUE COLLATE NOCASE,
+			"avtr_name"	TEXT NOT NULL,
+			"avtr_desc"	TEXT,
+			"avtr_img"	TEXT,
+			"user_id"	TEXT NOT NULL CHECK(length(user_id) = 40),
+			"user_name"	TEXT NOT NULL COLLATE NOCASE,
+			"user_username"	TEXT NOT NULL COLLATE NOCASE,
+			"date_collected"	TEXT,
+			"release_status"	TEXT COLLATE NOCASE,
+			"mark"	TEXT COLLATE NOCASE,
+			"notes"	TEXT,
+			"nsfw"	INTEGER DEFAULT 0,
+			PRIMARY KEY("avtr_id")
+			);
+		''')
+		conn.commit()
+		gc.close()
+		print("Generated tables")
+		print("You should only need to do this once.")
+		print("If you delete vrcdb.sqlite you will need to rerun this.")
+	except Exception as e:
+		vrcl.log("Unable to open vrcdb.sqlite")
+		vrcl.log(str(e))
