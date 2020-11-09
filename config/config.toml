@@ -16,4 +16,4 @@ globalKeybind = ["control","k"] # Default keybind control + k, accepts up to 3 m
 [debug]
 debugLog = false # Save output log to txt file instead of in the console window
 extraOptions = false # Allows removing favorites by avtr_id
-configSpec = 4 # Version of this config
+configSpec = 5 # Version of this config

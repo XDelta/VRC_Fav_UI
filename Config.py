@@ -7,7 +7,7 @@ from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
-configSpec = 4
+configSpec = 5
 
 class Config(object):
 
@@ -19,7 +19,7 @@ class Config(object):
 	# 	tomlData = toml.load(open(join(self.app_dir, 'config', 'favorites.toml')))
 	# 	self.getFavorites = tomlData
 
-	def getFavorites(self): # gets favorites from file when needed, allows updating your favorites without restarting
+	def getFavoritesToml(self): # gets favorites from file when needed, allows updating your favorites without restarting
 		try:
 			tomlData = toml.load(open(join(self.app_dir, 'config', 'favorites.toml')))
 			return tomlData
@@ -29,7 +29,7 @@ class Config(object):
 			return None
 
 	def setValDefault(self, val, default): #set a default in case the value is missing in the config
-		if(val == None or val == ""):
+		if(val in (None, "")):
 			return default
 		return val
 
@@ -44,6 +44,7 @@ class Config(object):
 			vrcl.log("2FA not supported yet")
 
 		self.getAvatarFolder = self.setValDefault(tomlData.get('management').get('avatarFolder'), "avatars")
+		self.writeAvatarDB = self.setValDefault(tomlData.get('management').get('writeAvatarDB'), False)
 		self.getReleaseStatusCheck = self.setValDefault(tomlData.get('management').get('releaseStatusCheck'), True)
 		self.failCooldown = self.setValDefault(tomlData.get('management').get('failCooldown'), 2)
 		self.normalCooldown = self.setValDefault(tomlData.get('management').get('normalCooldown'), 60)
@@ -53,7 +54,7 @@ class Config(object):
 
 		self.getDebugLogEnabled = self.setValDefault(tomlData.get('debug').get('debugLog'), False)
 		self.getExtraOptions = self.setValDefault(tomlData.get('debug').get('extraOptions'), False)
-		self.writedb = self.setValDefault(tomlData.get('debug').get('writedb'), False)
+
 		self.getSpec = tomlData.get('debug').get('configSpec')
 		if(self.getSpec != configSpec):
 			vrcl.log("ConfigSpec in "+configFile+" doesn't match this version, your config may be out of date")

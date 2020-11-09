@@ -102,11 +102,15 @@ def removeFavoriteID(id):
 	client.fetch_me().remove_favorite(id)
 
 def clearFavorites():
-	list = getFavoriteList()
-	user = client.fetch_me()
-	for favAv in list:
-		vrcl.log("removeFavorite: " + id)
-		user.remove_favorite(favAv.favoriteId)
+	try:
+		list = getFavoriteList()
+		user = client.fetch_me()
+		for favAv in list:
+			vrcl.log("removeFavorite: " + favAv.favoriteId) #id - fvrt_4b216a69-3159-49bb-a1c1-0fb2408883f6
+			user.remove_favorite(favAv.favoriteId)
+	except Exception as e:
+		print(str(e))
+
 
 def getFavoriteList():
 	#seem to not get all?, got 10 of 16
@@ -123,9 +127,19 @@ def revertFavorites():
 	clearFavorites()
 
 	vrcl.log("Restoring favorites from file")
+	f = config.getFavoritesToml()
+
+	print(str(f))
+	try:
+		print(config.getFavoritesToml().get(1)) #no str needed?
+		print("BHEHB: " + str(config.getFavoritesToml().get(str(1))))
+	except Exception as e:
+		print(str(e))
+
 	for x in range(1, 17):
-		if (config.getFavorites.get([str(x)] != "")):
-			setFavorite(stringToID(config.getFavorites.get([str(x)])))
+		ta = config.getFavoritesToml().get(str(x))
+		if (ta != ""):
+			setFavorite(stringToID(ta))
 		else:
 			vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
 
