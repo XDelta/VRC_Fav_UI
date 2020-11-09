@@ -67,15 +67,14 @@ def setFavorite(id):
 
 	try:
 		a = client.fetch_avatar(id)
-		vrcl.log("Adding "+id+" to favorites")
+		vrcl.log("Adding "+str(id)+" to favorites")
 	except Exception as e:
 		vrcl.log(str(e))
-		vrcl.log("Failed to find "+id+", avatar may have been deleted")
-		vrcl.log("No response received, retry later") #if vrc auth timed out, this will return no response. vrc might also just not have found it in time
+		vrcl.log("Failed to find "+str(id)+", avatar may have been deleted")
 		return
 
 	if(a.releaseStatus == "private" and config.getReleaseStatusCheck):
-		vrcl.log("Failed to add "+id+", avatar was made private and would be unavailable in game")
+		vrcl.log("Failed to add "+str(id)+", avatar was made private and would be unavailable in game")
 		vrcl.log("You may change releaseStatusCheck in config.toml to skip this check")
 		return
 

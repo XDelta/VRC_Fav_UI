@@ -153,7 +153,7 @@ class AppWindow(QWidget):
 		sID = vrcf.stringToID(self.idEntry.text())
 		self.clearId()
 		if(sID is None):
-			vrcl.log("No avtr_id in string")
+			vrcl.log("No avtr_id in string to favorite")
 			self.setCooldown(config.failCooldown)
 		else:
 			vrcf.setFavorite(sID)
@@ -185,7 +185,6 @@ class AppWindow(QWidget):
 		sID = vrcf.stringToID(self.idEntry.text())
 		self.clearId()
 		if(sID is None):
-			vrcl.log("No avtr_id in string to collect")
 			vrcl.log("ID field was empty or doesn't have a valid ID")
 			self.setCooldown(config.failCooldown)
 		else:
