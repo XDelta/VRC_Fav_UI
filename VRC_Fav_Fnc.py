@@ -46,16 +46,6 @@ def login():
 def getUser():
 	return client.fetch_me().displayName
 
-def checkAuth():
-	print("Checking Auth")
-	try:
-		c = client.api.call("/auth")
-		print("["+str(c.get('status'))+"] Authed?: "+str(c.get('data').get('ok')))
-	except Exception:
-		print("Failed connection, retrying")
-		c = client.api.call("/auth")
-		print("["+str(c.get('status'))+"] Authed?: "+str(c.get('data').get('ok')))
-
 def dropFile(data):
 	setFavorite(stringToID(data))
 
