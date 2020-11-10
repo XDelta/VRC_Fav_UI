@@ -16,7 +16,6 @@ from Logging import vrcl
 hk = SystemHotkey()
 appid = 'tk.deltawolf.vrc_fav_ui' # unique id string for windows to show taskbar icon
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(appid)
-onCooldown = False
 
 class DropTarget(QLabel):
 	def __init__(self):
@@ -116,7 +115,7 @@ class AppWindow(QWidget):
 
 		self.statusLabel = QLabel('Ready', self)
 		layout.addWidget(self.statusLabel, 11, 0, 1, 2)
-
+		self.onCooldown = False
 		self.setLayout(layout)
 
 	def dragEnterEvent(self, event):
@@ -176,7 +175,7 @@ class AppWindow(QWidget):
 		self.cooldown()
 
 	def btnCollectAvtr(self):
-		if not onCooldown:
+		if not self.onCooldown:
 			self.setCooldown(config.normalCooldown)
 			vrcf.collectAvatar()
 			self.cooldown()
@@ -231,12 +230,12 @@ class AppWindow(QWidget):
 
 	def cooldown(self):
 		if(time() < self.querytime):
-			onCooldown = True
+			self.onCooldown = True
 			self.btnState("disable")
 			threading.Timer(1.0, self.cooldown).start()
 			self.statusLabel.setText("Cooldown " + str((self.querytime) - int(time())) + "s")
 		else:
-			onCooldown = False
+			self.onCooldown = False
 			self.statusLabel.setText("Ready")
 			self.btnState("enable")
 
