@@ -5,23 +5,21 @@ A small interface to manage and archive your favorite avatars in vrchat.
 Python 3.8
 
 ## Install
-Download the [Latest Release](https://github.com/XDelta/VRC_Fav_UI/releases/latest/)<br>
-Run install.bat or
+Download the [Latest Release](https://github.com/XDelta/VRC_Fav_UI/releases/latest/).<br>
+Run `install.bat` or
 ```bash
 pip install -r requirements.txt
 ```
-then edit config.toml with your vrchat login information
+Edit `config.toml` with your vrchat login information
 
 ## Updating from a previous version
 I recommend you make a backup of the folder before starting and move/rename the existing folder<br>
 Install using instructions above<br>
-Copy avatars/config folders into new install<br>
+Copy the `avatars/` and `config/` folders into new install<br>
 (old configs will warn you if out of date)<br>
 
-Run VRC_Fav_UI.py
-
 ## Usage
-Run VRC_Fav_UI.py
+Run `VRC_Fav_UI.py`
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
