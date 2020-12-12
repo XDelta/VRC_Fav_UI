@@ -25,7 +25,6 @@ except Exception as e:
 	vrcl.log(str(e))
 	end()
 
-
 def login():
 	try:
 		client.login(config.getUsername, config.getPassword)
@@ -93,7 +92,6 @@ def clearFavorites():
 	except Exception as e:
 		print(str(e))
 
-
 def getFavoriteList():
 	vrcl.log("Fetching favorites")
 	a = client.fetch_me().fetch_favorites("avatar")
@@ -104,21 +102,14 @@ def getFavoriteList():
 def revertFavorites():
 	clearFavorites()
 
-	vrcl.log("Restoring favorites from file")
-	f = config.getFavoritesToml()
-
-	print(str(f))
-	try:
-		print(config.getFavoritesToml().get(1)) #no str needed?
-		print("BHEHB: " + str(config.getFavoritesToml().get(str(1))))
-	except Exception as e:
-		print(str(e))
-
-	for x in range(1, 17):
-		ta = config.getFavoritesToml().get(str(x))
-		if (ta != ""):
-			setFavorite(stringToID(ta))
-		else:
+	for x in range(1, 26):
+		try:
+			ta = config.getFavoritesToml().get(str(x))
+			if (ta is None):
+				vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
+			else:
+				setFavorite(stringToID(ta))
+		except Exception as e:
 			vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
 
 def collectAvatar(): #get currently worn avatar and pass id to collect
