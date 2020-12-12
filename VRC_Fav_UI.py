@@ -116,6 +116,7 @@ class AppWindow(QWidget):
 		self.statusLabel = QLabel('Ready', self)
 		layout.addWidget(self.statusLabel, 11, 0, 1, 2)
 		self.onCooldown = False
+		self.allowDrop = True
 		self.setLayout(layout)
 
 	def dragEnterEvent(self, event):
