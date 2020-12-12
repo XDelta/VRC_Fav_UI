@@ -3,3 +3,4 @@ vrcpy==0.7.9
 PyQt5>=5.15.1
 toml>=0.10.1
 system-hotkey==1.0.3
+pywin32==228
