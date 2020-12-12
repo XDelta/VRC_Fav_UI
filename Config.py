@@ -6,7 +6,7 @@ from Logging import vrcl
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
-configSpec = 5
+configSpec = 6
 
 class Config(object):
 
