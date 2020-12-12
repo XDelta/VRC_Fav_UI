@@ -1,4 +1,3 @@
-# pylint: disable=E0611,E1101,W0201,W0622
 from os import mkdir
 from os.path import dirname, isdir, join
 import toml

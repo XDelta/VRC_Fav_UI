@@ -1,4 +1,3 @@
-# pylint: disable=E0611,E1101,W0201,W0622
 import re, shutil, sys, sqlite3
 from os.path import exists, join
 from datetime import datetime

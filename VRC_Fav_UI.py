@@ -1,4 +1,3 @@
-# pylint: disable=E0611,E1101,W0201,W0622
 import sys, ctypes
 from os.path import join
 from os import environ
