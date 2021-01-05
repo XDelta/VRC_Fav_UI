@@ -19,7 +19,9 @@ Copy the `avatars/` and `config/` folders into new install<br>
 (old configs will warn you if out of date)<br>
 
 ## Usage
-Run `VRC_Fav_UI.py`
+Run `VRC_Fav_UI.py`<br>
+While in-game use the hotkey `ctrl+k` by default or click `Collect Current Avatar` 
+
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
