@@ -7,10 +7,10 @@ python -V | find "Python" >NUL 2>NUL && (goto :PYTHON_INSTALLED)
 goto :EOF
 
 :PYTHON_NOT_INSTALLED
-echo Python is not installed on your system.
+echo Python does not appear to be installed on your system.
 echo Please download Python 3.8+
 echo https://www.python.org/downloads/
-echo When installing, make sure Install to PATH is checked
+echo When installing, make sure 'Add Python 3.x to PATH' is checked
 goto :EOF
 
 :PYTHON_INSTALLED
@@ -25,8 +25,8 @@ pip -V | find "pip" >NUL 2>NUL && (goto :PYTHON_PATH)
 goto :EOF
 
 :PYTHON_NOT_PATH
-echo Pip was not found in PATH
-echo Please re-run python installer and check Add Python 3.8 to PATH
+echo Pip was not found in environment PATH
+echo Please re-run python installer and make sure 'Add Python 3.x to PATH' is checked
 goto :EOF
 
 :PYTHON_PATH
