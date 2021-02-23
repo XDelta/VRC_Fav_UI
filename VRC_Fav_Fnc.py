@@ -137,7 +137,7 @@ def collectAvatarById(idInput):
 
 	if config.writeAvatarDB: # write to sqlite db if configured
 		try:
-			conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
+			conn = sqlite3.connect(join(config.avatar_dir, 'vrcdb.sqlite'))
 			ac = conn.cursor()
 			if ac.execute("SELECT EXISTS(SELECT 1 FROM AVATARS WHERE avtr_id=?)", (idInput, )).fetchone()[0] > 0: #check if id is already in db
 				print("Found "+idInput+" in db")
@@ -171,7 +171,7 @@ def collectAvatarById(idInput):
 
 def generate():
 	try:
-		conn = sqlite3.connect(join(config.app_dir, 'vrcdb.sqlite'))
+		conn = sqlite3.connect(join(config.avatar_dir, 'vrcdb.sqlite'))
 		gc = conn.cursor()
 		gc.execute('''CREATE TABLE IF NOT EXISTS "AVATARS" (
 			"avtr_id"	TEXT NOT NULL CHECK(length(avtr_id) = 41) UNIQUE COLLATE NOCASE,
