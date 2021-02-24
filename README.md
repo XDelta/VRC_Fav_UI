@@ -1,7 +1,7 @@
 # VRC_Fav_UI
 A small interface to manage and archive your favorite avatars in vrchat.
 
-![Application example image](https://github.com/XDelta/VRC_Fav_UI/tree/master/.github/Images/FavUIExample.png)
+![Application example image](/.github/Images/FavUIExample.png)
 
 ## Prerequisite
 Python 3.8+
