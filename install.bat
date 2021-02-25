@@ -2,9 +2,10 @@
 goto :PYTHON_CHECK
 
 :PYTHON_CHECK
-python -V | find /v "Python" >NUL 2>NUL && (goto :PYTHON_NOT_INSTALLED)
-python -V | find "Python" >NUL 2>NUL && (goto :PYTHON_INSTALLED)
-goto :EOF
+python -V 2>NUL
+if errorlevel 1 goto :PYTHON_NOT_INSTALLED
+echo %errorlevel%
+goto :PYTHON_INSTALLED
 
 :PYTHON_NOT_INSTALLED
 echo Python does not appear to be installed on your system.
@@ -17,12 +18,12 @@ goto :EOF
 for /f "delims=" %%V in ('python -V') do @set pyver=%%V
 echo Found %pyver%
 goto :PYTHON_PATH_CHECK
-goto :EOF
 
 :PYTHON_PATH_CHECK
-pip -V | find /v "pip" >NUL 2>NUL && (goto :PYTHON_NOT_PATH)
-pip -V | find "pip" >NUL 2>NUL && (goto :PYTHON_PATH)
-goto :EOF
+pip -V 2>NUL
+if errorlevel 1 goto :PYTHON_NOT_PATH
+echo %errorlevel%
+goto :PYTHON_PATH
 
 :PYTHON_NOT_PATH
 echo Pip was not found in environment PATH
