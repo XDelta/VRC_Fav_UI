@@ -72,6 +72,7 @@ class AppWindow(QWidget):
 
 		layout.addWidget(QLabel('Logged in as: '), 1, 0)
 		vrcf.login()
+
 		layout.addWidget(QLabel(vrcf.getUser()), 1, 1)
 
 		layout.addWidget(DropTarget(), 2, 0, 1, 2)#avatar drag and drop
@@ -107,16 +108,12 @@ class AppWindow(QWidget):
 		self.revertFavBtn.clicked.connect(self.btnRevertFav)
 		layout.addWidget(self.revertFavBtn, 9, 0, 1, 2)
 
-		if config.writeAvatarDB:
-			self.genDBBtn = QPushButton('[Generate DB]', self) #Use once to make db
-			self.genDBBtn.clicked.connect(self.btnGenDB)
-			layout.addWidget(self.genDBBtn, 10, 0, 1, 2)
-
 		self.statusLabel = QLabel('Ready', self)
-		layout.addWidget(self.statusLabel, 11, 0, 1, 2)
+		layout.addWidget(self.statusLabel, 10, 0, 1, 2)
 		self.onCooldown = False
 		self.allowDrop = True
 		self.setLayout(layout)
+		vrcf.checkdb()
 
 	def dragEnterEvent(self, event):
 		if event.mimeData().hasImage:
@@ -157,11 +154,6 @@ class AppWindow(QWidget):
 		else:
 			vrcf.setFavorite(sID)
 			self.setCooldown(config.normalCooldown)
-		self.cooldown()
-
-	def btnGenDB(self):
-		vrcf.generate()
-		self.setCooldown(3)
 		self.cooldown()
 
 	def btnRevertFav(self):
@@ -252,6 +244,7 @@ def suppress_qt_warnings():
 
 suppress_qt_warnings()
 app = QApplication(sys.argv)
+vrcf.updatecheck()
 appWindow = AppWindow()
 appWindow.show()
 

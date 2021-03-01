@@ -169,31 +169,32 @@ def collectAvatarById(idInput):
 		vrcl.log("Avatar " + avtr_name+":"+avtr_id+" has already been downloaded")
 		vrcl.log("Skipping")
 
-def generate():
-	try:
-		conn = sqlite3.connect(join(config.avatar_dir, 'vrcdb.sqlite'))
-		gc = conn.cursor()
-		gc.execute('''CREATE TABLE IF NOT EXISTS "AVATARS" (
-			"avtr_id"	TEXT NOT NULL CHECK(length(avtr_id) = 41) UNIQUE COLLATE NOCASE,
-			"avtr_name"	TEXT NOT NULL,
-			"avtr_desc"	TEXT,
-			"avtr_img"	TEXT,
-			"user_id"	TEXT NOT NULL CHECK(length(user_id) = 40),
-			"user_name"	TEXT NOT NULL COLLATE NOCASE,
-			"user_username"	TEXT NOT NULL COLLATE NOCASE,
-			"date_collected"	TEXT,
-			"release_status"	TEXT COLLATE NOCASE,
-			"mark"	TEXT COLLATE NOCASE,
-			"notes"	TEXT,
-			"nsfw"	INTEGER DEFAULT 0,
-			PRIMARY KEY("avtr_id")
-			);
-		''')
-		conn.commit()
-		gc.close()
-		print("Generated tables")
-		print("You should only need to do this once.")
-		print("If you delete vrcdb.sqlite you will need to rerun this.")
-	except Exception as e:
-		vrcl.log("Unable to open vrcdb.sqlite")
-		vrcl.log(str(e))
+def checkdb():
+	if config.writeAvatarDB: #check if sqlite db is enabled
+		if not exists(config.dbfile): #if db doesn't exist create one
+			try:
+				conn = sqlite3.connect(config.dbfile)
+				gc = conn.cursor()
+				gc.execute('''CREATE TABLE IF NOT EXISTS "AVATARS" (
+					"avtr_id"	TEXT NOT NULL CHECK(length(avtr_id) = 41) UNIQUE COLLATE NOCASE,
+					"avtr_name"	TEXT NOT NULL,
+					"avtr_desc"	TEXT,
+					"avtr_img"	TEXT,
+					"user_id"	TEXT NOT NULL CHECK(length(user_id) = 40),
+					"user_name"	TEXT NOT NULL COLLATE NOCASE,
+					"user_username"	TEXT NOT NULL COLLATE NOCASE,
+					"date_collected"	TEXT,
+					"release_status"	TEXT COLLATE NOCASE,
+					"mark"	TEXT COLLATE NOCASE,
+					"notes"	TEXT,
+					"nsfw"	INTEGER DEFAULT 0,
+					PRIMARY KEY("avtr_id")
+					);
+				''')
+				conn.commit()
+				gc.close()
+				vrcl.log("Generated vrcdb.sqlite")
+			except Exception as e:
+				vrcl.log("Unable to open vrcdb.sqlite")
+				vrcl.log(str(e))
+

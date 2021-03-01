@@ -70,6 +70,8 @@ class Config(object):
 			vrcl.log("Avatar folder name invalid, falling back to 'avatars'")
 			self.avatar_dir = join(self.app_dir, 'avatars')
 
+		self.dbfile = join(self.avatar_dir, 'vrcdb.sqlite')
+
 		if not isdir(self.avatar_dir):
 			mkdir(self.avatar_dir)
 
