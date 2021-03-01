@@ -4,3 +4,4 @@ PyQt5==5.15.2
 toml>=0.10.2
 system-hotkey==1.0.3
 pywin32==300
+packaging==20.9

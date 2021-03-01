@@ -3,6 +3,7 @@ from os.path import exists, join
 from datetime import datetime
 
 import vrcpy, requests
+from packaging.version import parse as parse_version
 
 from Config import config
 from Logging import vrcl
@@ -198,3 +199,18 @@ def checkdb():
 				vrcl.log("Unable to open vrcdb.sqlite")
 				vrcl.log(str(e))
 
+def updatecheck():
+	try:
+		response = requests.get("https://api.github.com/repos/XDelta/VRC_Fav_UI/releases/latest")
+		cver = parse_version(config.version)
+		rver = parse_version(response.json()["name"])
+
+		if rver > cver:
+			vrcl.log("New version available [" + str(rver) + "], Current [" + str(cver) +"]")
+		elif rver < cver:
+			vrcl.log("Ahead of Remote [" + str(rver) + "], Current [" + str(cver) +"]")
+		else:
+			vrcl.log("Up to date [" + str(rver) + "]")
+	except Exception as e:
+		print(str(e))
+		vrcl.log("Unable to check for update")

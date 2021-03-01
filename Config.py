@@ -1,8 +1,10 @@
 from os import mkdir
 from os.path import dirname, isdir, join
+
 import toml
 
 from Logging import vrcl
+import __meta__ as meta
 
 appname = 'VRC Fav UI'
 applongname = 'VRC: Fav UI'
@@ -13,6 +15,7 @@ class Config(object):
 	def __init__(self):
 		self.app_dir = dirname(__file__)
 		self.app_icon = join(self.app_dir, 'favicon.ico')
+		self.version = meta.version
 
 	# def setFavoritesFile(self, favoriteFile):
 	# 	tomlData = toml.load(open(join(self.app_dir, 'config', 'favorites.toml')))
