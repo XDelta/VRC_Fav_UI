@@ -31,7 +31,7 @@ def login():
 		b = client.fetch_me()
 		vrcl.log("Logged in as: "+b.displayName)
 	except Exception as e:
-		vrcl.log(type(e)+":"+e)
+		vrcl.log(str(e))
 		vrcl.log("Failed to Login")
 		end()
 
@@ -106,11 +106,11 @@ def revertFavorites():
 		try:
 			ta = config.getFavoritesToml().get(str(x))
 			if (ta is None):
-				vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
+				vrcl.log("Skipping favorite "+ str(x) + " as it is not set")
 			else:
 				setFavorite(stringToID(ta))
 		except Exception as e:
-			vrcl.log("Skipping favorite "+ str(x)+ " as it is not set")
+			vrcl.log("Skipping favorite "+ str(x) + " as it is not set")
 
 def collectAvatar(): #get currently worn avatar and pass id to collect
 	b = client.fetch_me() #refresh user object

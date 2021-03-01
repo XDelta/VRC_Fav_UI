@@ -3,7 +3,8 @@ from os.path import join
 from os import environ
 from time import time
 import threading
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout, QLineEdit#, QCheckBox
+
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QGridLayout, QLineEdit
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from system_hotkey import SystemHotkey
@@ -128,7 +129,7 @@ class AppWindow(QWidget):
 			event.ignore()
 
 	def dropEvent(self, event):
-		if(event.mimeData().hasImage and self.allowDrop == True):# and self.allowDrop == True
+		if(event.mimeData().hasImage and self.allowDrop == True):
 			event.setDropAction(Qt.CopyAction)
 			file_path = event.mimeData().urls()[0].toLocalFile()
 			sID = vrcf.stringToID(file_path)
