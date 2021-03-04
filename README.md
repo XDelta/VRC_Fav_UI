@@ -1,5 +1,10 @@
 # VRC_Fav_UI
-A small interface to manage and archive your favorite avatars in vrchat.
+A small interface to manage and archive your favorite avatars in VRChat.
+
+Using this tool allows you to have more VRChat favorites by letting you save some of the avatar information offline,
+mainly the image and avtr_id. Favorites lists can also be used to organize and restore presets by editing `favorites.toml`.
+
+Additionally this tool is **not a modification to the VRChat client** and only uses the [VRChat API](https://vrchatapi.github.io/)
 
 ![Application example image](/.github/Images/FavUIExample.png)
 
@@ -12,7 +17,7 @@ Run `install.bat` or
 ```bash
 pip install -r requirements.txt
 ```
-Edit `config.toml` with your vrchat login information
+Edit `config.toml` with your VRChat login information
 
 ## Updating from a previous version
 I recommend you make a backup of the folder before starting and move/rename the existing folder<br>
