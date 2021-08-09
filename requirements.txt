@@ -3,5 +3,5 @@ vrcpy==0.8.2
 PyQt5==5.15.2
 toml>=0.10.2
 system-hotkey==1.0.3
-pywin32==300
+pywin32==301
 packaging==20.9
